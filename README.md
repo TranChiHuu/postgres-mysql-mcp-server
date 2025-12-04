@@ -2,6 +2,54 @@
 
 A Model Context Protocol (MCP) server for querying PostgreSQL and MySQL databases.
 
+## What is MCP and Why Use It?
+
+**Model Context Protocol (MCP)** is a standardized protocol that enables AI assistants in code editors like [Cursor](https://cursor.sh/), [Windsurf](https://codeium.com/windsurf), and other AI-powered development tools to securely interact with external systems and data sources.
+
+This MCP server bridges the gap between your AI coding assistant and your databases, allowing the AI to:
+
+- **Understand your database schema** - The AI can explore tables, columns, and relationships
+- **Write accurate SQL queries** - Generate queries based on your actual database structure
+- **Debug database issues** - Query data to understand problems and verify fixes
+- **Generate database-aware code** - Create application code that matches your database schema
+- **Answer questions about your data** - Query the database to provide accurate information
+
+### Perfect for AI-Powered Editors
+
+When integrated with AI editors like **Cursor** or **Windsurf**, this MCP server transforms your AI assistant into a database-aware coding companion:
+
+**Example Use Cases:**
+
+1. **Schema-Aware Code Generation**
+   - *You:* "Create a user registration API endpoint"
+   - *AI:* Automatically queries your database schema, understands the `users` table structure, and generates code that matches your exact column names and types
+
+2. **Intelligent Query Writing**
+   - *You:* "Show me all active users from the last 30 days"
+   - *AI:* Connects to your database, checks the schema, and writes a correct SQL query using your actual table and column names
+
+3. **Database Debugging**
+   - *You:* "Why is my user login failing?"
+   - *AI:* Queries your database to check user records, verify table structures, and identify potential issues
+
+4. **Data-Driven Development**
+   - *You:* "Create a dashboard showing user statistics"
+   - *AI:* Explores your database schema, understands relationships, and generates accurate queries and code
+
+5. **Migration and Refactoring**
+   - *You:* "Refactor this code to use the new database schema"
+   - *AI:* Compares your code with the actual database schema and suggests accurate changes
+
+### How It Works
+
+1. **Configure** the MCP server in your AI editor (Cursor, Windsurf, etc.)
+2. **Connect** to your PostgreSQL or MySQL database
+3. **Ask** your AI assistant questions or request code generation
+4. **AI uses** the MCP server to query your database schema and data
+5. **Get** accurate, database-aware responses and code
+
+The AI assistant can now "see" your database structure and data, making it much more helpful and accurate in generating database-related code.
+
 ## Features
 
 - Connect to PostgreSQL and MySQL databases
@@ -10,11 +58,36 @@ A Model Context Protocol (MCP) server for querying PostgreSQL and MySQL database
 - Describe table schemas
 - Parameterized query support
 - Connection pooling for better performance
+- Secure credential management via environment variables
+- Auto-connect on startup when environment variables are set
 
 ## Installation
 
-1. Install dependencies:
+### Option 1: Install via npm (Recommended)
+
+Install globally to use with npx:
 ```bash
+npm install -g postgres-mysql-mcp-server
+```
+
+Or install locally in your project:
+```bash
+npm install postgres-mysql-mcp-server
+```
+
+### Option 2: Use with npx (No installation required)
+
+You can run the server directly with npx without installing:
+```bash
+npx postgres-mysql-mcp-server
+```
+
+### Option 3: Development Installation
+
+For local development:
+```bash
+git clone https://github.com/TranChiHuu/postgres-mysql-mcp-server.git
+cd postgres-mysql-mcp-server
 npm install
 ```
 
@@ -22,8 +95,19 @@ npm install
 
 ### Running the Server
 
-The server runs on stdio and communicates via the MCP protocol:
+The server runs on stdio and communicates via the MCP protocol.
 
+**Using npx (recommended for most users):**
+```bash
+npx postgres-mysql-mcp-server
+```
+
+**Using globally installed package:**
+```bash
+postgres-mysql-mcp-server
+```
+
+**For local development:**
 ```bash
 npm start
 ```
@@ -148,15 +232,39 @@ MYSQL_SSL=false            # optional
 
 ### MCP Client Configuration
 
-Add this to your MCP client configuration (e.g., in Cursor or other MCP-compatible tools):
+This MCP server integrates seamlessly with AI-powered code editors. Add it to your MCP client configuration to enable database-aware AI assistance.
+
+#### Supported Editors
+
+- **[Cursor](https://cursor.sh/)** - AI-powered code editor
+- **[Windsurf](https://codeium.com/windsurf)** - AI-first IDE
+- Any editor that supports the Model Context Protocol
+
+#### Configuration Steps
+
+**For Cursor:**
+1. Open Cursor Settings
+2. Navigate to Features → Model Context Protocol
+3. Add the server configuration below
+
+**For Windsurf:**
+1. Open Settings
+2. Navigate to MCP Servers
+3. Add the server configuration below
+
+**For other MCP-compatible editors:**
+Add the configuration to your MCP settings file (typically `~/.config/mcp/settings.json` or editor-specific location)
+
+#### Configuration Options
+
+#### Option 1: Using npx (Recommended - No installation required)
 
 ```json
 {
   "mcpServers": {
     "sql": {
-      "command": "node",
-      "args": ["/path-to-source/postgres-mysql-mcp-server/index.js"],
-      "cwd": "/path-to-source/postgres-mysql-mcp-server",
+      "command": "npx",
+      "args": ["-y", "postgres-mysql-mcp-server"],
       "env": {
         "DB_TYPE": "postgresql",
         "DB_HOST": "localhost",
@@ -170,9 +278,57 @@ Add this to your MCP client configuration (e.g., in Cursor or other MCP-compatib
 }
 ```
 
-**Important:** Always include `"cwd"` when using the `node` command directly, so Node can find the `node_modules` directory.
+The `-y` flag automatically answers "yes" to install prompts.
 
-Or if using npm script:
+#### Option 2: Using globally installed package
+
+If you've installed the package globally (`npm install -g postgres-mysql-mcp-server`):
+
+```json
+{
+  "mcpServers": {
+    "sql": {
+      "command": "postgres-mysql-mcp-server",
+      "env": {
+        "DB_TYPE": "postgresql",
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "mydb",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "password"
+      }
+    }
+  }
+}
+```
+
+#### Option 3: Using local installation
+
+If you've installed the package locally in your project:
+
+```json
+{
+  "mcpServers": {
+    "sql": {
+      "command": "node",
+      "args": ["./node_modules/postgres-mysql-mcp-server/index.js"],
+      "env": {
+        "DB_TYPE": "postgresql",
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "mydb",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "password"
+      }
+    }
+  }
+}
+```
+
+#### Option 4: Development setup (for local development)
+
+If you're developing locally and have cloned the repository:
+
 ```json
 {
   "mcpServers": {
@@ -192,6 +348,26 @@ Or if using npm script:
   }
 }
 ```
+
+### Example: Using with Cursor AI
+
+Once configured, you can interact with your database through natural language:
+
+**Example Conversation:**
+
+```
+You: "What tables are in my database?"
+AI: [Uses list_tables tool] "Your database contains: users, orders, products, categories"
+
+You: "Show me the structure of the users table"
+AI: [Uses describe_table tool] "The users table has: id (integer), email (varchar), created_at (timestamp)..."
+
+You: "Create an API endpoint to get user by ID"
+AI: [Uses describe_table to understand schema, then generates code]
+     "Here's the endpoint matching your users table structure..."
+```
+
+The AI assistant automatically uses the appropriate MCP tools to query your database and provide accurate, schema-aware responses.
 
 ## Development
 

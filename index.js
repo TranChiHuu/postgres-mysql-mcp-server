@@ -16,7 +16,7 @@ class SQLMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'mcp-sql',
+        name: 'postgres-mysql-mcp-server',
         version: '1.0.0',
       },
       {

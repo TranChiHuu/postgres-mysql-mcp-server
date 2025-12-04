@@ -1,9 +1,16 @@
 {
-  "name": "mcp-sql",
-  "version": "1.0.0",
+  "name": "postgres-mysql-mcp-server",
+  "version": "1.0.4",
   "description": "MCP server for querying PostgreSQL and MySQL databases",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "postgres-mysql-mcp-server": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
   "scripts": {
     "start": "node index.js"
   },
@@ -12,10 +19,14 @@
     "sql",
     "postgresql",
     "mysql",
-    "database"
+    "database",
+    "model-context-protocol"
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0",
     "pg": "^8.11.3",
