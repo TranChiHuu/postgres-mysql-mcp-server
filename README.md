@@ -2,6 +2,35 @@
 
 A Model Context Protocol (MCP) server for querying PostgreSQL and MySQL databases.
 
+## Quick Start
+
+**Recommended:** Use npx to run without installation:
+
+```bash
+npx postgres-mysql-mcp-server
+```
+
+For MCP client configuration (Cursor, Windsurf, etc.), use:
+
+```json
+{
+  "mcpServers": {
+    "sql": {
+      "command": "npx",
+      "args": ["-y", "postgres-mysql-mcp-server"],
+      "env": {
+        "DB_TYPE": "postgresql",
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "mydb",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "password"
+      }
+    }
+  }
+}
+```
+
 ## What is MCP and Why Use It?
 
 **Model Context Protocol (MCP)** is a standardized protocol that enables AI assistants in code editors like [Cursor](https://cursor.sh/), [Windsurf](https://codeium.com/windsurf), and other AI-powered development tools to securely interact with external systems and data sources.
@@ -63,28 +92,33 @@ The AI assistant can now "see" your database structure and data, making it much 
 
 ## Installation
 
-### Option 1: Install via npm (Recommended)
+### Option 1: Use with npx (Recommended - No installation required)
 
-Install globally to use with npx:
-```bash
-npm install -g postgres-mysql-mcp-server
-```
+**Recommended:** Run the server directly with npx without any installation. This is the simplest and most convenient method:
 
-Or install locally in your project:
-```bash
-npm install postgres-mysql-mcp-server
-```
-
-### Option 2: Use with npx (No installation required)
-
-You can run the server directly with npx without installing:
 ```bash
 npx postgres-mysql-mcp-server
 ```
 
+The `-y` flag is automatically handled by npx, so it will download and run the latest version without prompts.
+
+### Option 2: Install via npm
+
+If you prefer to install the package:
+
+**Global installation:**
+```bash
+npm install -g postgres-mysql-mcp-server
+```
+
+**Local installation in your project:**
+```bash
+npm install postgres-mysql-mcp-server
+```
+
 ### Option 3: Development Installation
 
-For local development:
+For local development or contributing:
 ```bash
 git clone https://github.com/TranChiHuu/postgres-mysql-mcp-server.git
 cd postgres-mysql-mcp-server
@@ -97,12 +131,14 @@ npm install
 
 The server runs on stdio and communicates via the MCP protocol.
 
-**Using npx (recommended for most users):**
+**Recommended: Using npx (no installation required)**
 ```bash
 npx postgres-mysql-mcp-server
 ```
 
-**Using globally installed package:**
+This is the recommended way to run the server. npx will automatically download and run the latest version.
+
+**Alternative: Using globally installed package**
 ```bash
 postgres-mysql-mcp-server
 ```
@@ -259,6 +295,8 @@ Add the configuration to your MCP settings file (typically `~/.config/mcp/settin
 
 #### Option 1: Using npx (Recommended - No installation required)
 
+**This is the recommended configuration.** npx automatically downloads and runs the latest version without requiring any installation:
+
 ```json
 {
   "mcpServers": {
@@ -278,7 +316,12 @@ Add the configuration to your MCP settings file (typically `~/.config/mcp/settin
 }
 ```
 
-The `-y` flag automatically answers "yes" to install prompts.
+**Benefits of using npx:**
+- ✅ No installation required
+- ✅ Always uses the latest version
+- ✅ No manual updates needed
+- ✅ Works across different projects without conflicts
+- ✅ The `-y` flag automatically answers "yes" to install prompts
 
 #### Option 2: Using globally installed package
 
@@ -304,7 +347,7 @@ If you've installed the package globally (`npm install -g postgres-mysql-mcp-ser
 
 #### Option 3: Using local installation
 
-If you've installed the package locally in your project:
+If you've installed the package locally in your project (`npm install postgres-mysql-mcp-server`):
 
 ```json
 {
@@ -384,6 +427,10 @@ The project uses plain JavaScript (ES modules), so no build step is required. Ju
 
 - Node.js 18+ 
 - PostgreSQL or MySQL database access
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 

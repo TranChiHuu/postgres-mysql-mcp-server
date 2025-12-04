@@ -1,6 +1,6 @@
 {
   "name": "postgres-mysql-mcp-server",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "MCP server for querying PostgreSQL and MySQL databases",
   "main": "index.js",
   "type": "module",
@@ -24,6 +24,10 @@
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TranChiHuu/postgres-mysql-mcp-server.git"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
