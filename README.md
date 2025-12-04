@@ -155,8 +155,8 @@ Add this to your MCP client configuration (e.g., in Cursor or other MCP-compatib
   "mcpServers": {
     "sql": {
       "command": "node",
-      "args": ["/Users/tranchihuu/Desktop/mcp-sql/index.js"],
-      "cwd": "/Users/tranchihuu/Desktop/mcp-sql",
+      "args": ["/path-to-source/postgres-mysql-mcp-server/index.js"],
+      "cwd": "/path-to-source/postgres-mysql-mcp-server",
       "env": {
         "DB_TYPE": "postgresql",
         "DB_HOST": "localhost",
@@ -179,7 +179,7 @@ Or if using npm script:
     "sql": {
       "command": "npm",
       "args": ["start"],
-      "cwd": "/Users/tranchihuu/Desktop/mcp-sql",
+      "cwd": "/path-to-source/postgres-mysql-mcp-server",
       "env": {
         "DB_TYPE": "postgresql",
         "DB_HOST": "localhost",
